@@ -7,8 +7,8 @@ Gem::Specification.new do |spec|
   spec.version       = Railsbytes::VERSION
   spec.authors       = ['Marco Roth']
   spec.email         = ['marco.roth@intergga.ch']
-  spec.summary       = 'Write a short summary, because RubyGems requires one.'
-  spec.description   = 'Write a longer description or delete this line.'
+  spec.summary       = 'CLI to apply Railsbytes templates to your Rails application'
+  spec.description   = spec.summary
   spec.homepage      = 'https://github.com/marcoroth/railsbytes'
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.3.0')
@@ -24,14 +24,14 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'lhc'
-  spec.add_dependency 'thor'
-  spec.add_dependency 'tty-box'
-  spec.add_dependency 'tty-command'
-  spec.add_dependency 'tty-prompt'
-  spec.add_dependency 'tty-spinner'
+  spec.add_dependency 'lhc', '~> 11.1'
+  spec.add_dependency 'thor', '~> 1.0'
+  spec.add_dependency 'tty-box', '~> 0.5'
+  spec.add_dependency 'tty-command', '~> 0.9'
+  spec.add_dependency 'tty-prompt', '~> 0.21'
+  spec.add_dependency 'tty-spinner', '~> 0.9'
 
   spec.add_development_dependency 'bundler', '~> 2.0'
-  spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'rubocop'
+  spec.add_development_dependency 'rake', '~> 13.0'
+  spec.add_development_dependency 'rubocop', '~> 0.84'
 end

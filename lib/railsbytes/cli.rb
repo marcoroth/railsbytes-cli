@@ -6,8 +6,6 @@ module Railsbytes
   class CLI < Thor
     include Thor::Actions
 
-    Error = Class.new(StandardError)
-
     desc 'version', 'railsbytes version'
     def version
       require_relative 'version'
@@ -15,10 +13,10 @@ module Railsbytes
     end
     map %w[--version -v] => :version
 
-    desc 'install NAME', 'Apply a template to your rails app'
+    desc 'install NAME', 'Apply a Railsbytes template to your Rails app'
     def install(name)
       require_relative 'commands/install'
-      @config = Railsbytes::Commands::Install.new(name).execute
+      Railsbytes::Commands::Install.new(name).execute
     end
   end
 end

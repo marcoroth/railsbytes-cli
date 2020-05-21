@@ -6,7 +6,6 @@ require 'thor'
 
 require 'tty-spinner'
 require 'tty-box'
-require 'tty-command'
 
 require_relative '../command'
 
@@ -31,18 +30,16 @@ module Railsbytes
 
         spinner = TTY::Spinner.new(":spinner Searching for '#{@name}' templates on railsbytes.com", format: :bouncing_ball)
         spinner.auto_spin
-
         sleep 0.5
-
-        @templates = TEMPLATES
         spinner.stop
 
-        template_id = prompt.select("\nAwesome! Found the following templates:", @templates)
+        template_id = prompt.select("\nAwesome! Found the following templates:", TEMPLATES)
         template = TEMPLATES.find { |t| t[:value] == template_id }
         script = LHC.get("https://railsbytes.com/script/#{template_id}").body
 
         puts ''
-        print TTY::Box.info(script,
+        print TTY::Box.info(
+          script,
           title: {
             top_left: "Template: #{template[:name]}",
             bottom_right: "id: #{template_id}"
@@ -58,13 +55,11 @@ module Railsbytes
         )
         puts ''
 
-        run = prompt.yes?("Do you want apply this template to your Rails app '#{Dir.pwd}'?", default: false)
+        install = prompt.yes?("Do you want apply this template to your Rails app '#{Dir.pwd}'?", default: false)
 
-        if run
-          cmd = TTY::Command.new
-          cmd.run("rails app:template LOCATION=\"https://railsbytes.com/script/#{template_id}\"")
-        end
+        return unless install
 
+        command.run("rails app:template LOCATION=\"https://railsbytes.com/script/#{template_id}\"")
       rescue TTY::Reader::InputInterrupt
         puts "\nAborting..."
         exit(0)

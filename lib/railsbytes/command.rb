@@ -27,5 +27,15 @@ module Railsbytes
       require 'tty-prompt'
       TTY::Prompt.new(options)
     end
+
+    # The external commands runner
+    #
+    # @see http://www.rubydoc.info/gems/tty-command
+    #
+    # @api public
+    def command(**options)
+      require 'tty-command'
+      TTY::Command.new(options)
+    end
   end
 end

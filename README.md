@@ -1,28 +1,25 @@
-# Railsbytes
+# Railsbytes CLI
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/railsbytes`. To experiment with that code, run `bin/console` for an interactive prompt.
+This Gem is a proof-of-concept CLI to apply [Railsbytes.com](https://railsbytes.com) templates to your Rails application.
 
-TODO: Delete this and the text above, and describe your gem
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'railsbytes'
-```
-
-And then execute:
-
-    $ bundle install
-
-Or install it yourself as:
+Install it with:
 
     $ gem install railsbytes
 
 ## Usage
 
-TODO: Write usage instructions here
+    $ railsbytes install NAME
+
+Where `NAME` is the template you want to search for on Railsbytes.com.
+
+### Example
+
+This example would apply the tailwind template to your Rails application:
+
+    $ railsbytes install tailwind
 
 ## Development
 
