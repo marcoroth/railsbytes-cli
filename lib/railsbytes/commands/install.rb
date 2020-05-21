@@ -5,7 +5,6 @@ require 'json'
 require 'thor'
 
 require 'tty-spinner'
-require 'tty-config'
 require 'tty-box'
 require 'tty-command'
 
