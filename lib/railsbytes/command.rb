@@ -25,7 +25,7 @@ module Railsbytes
     # @api public
     def prompt(**options)
       require 'tty-prompt'
-      TTY::Prompt.new(options)
+      TTY::Prompt.new(**options)
     end
 
     # The external commands runner
@@ -35,7 +35,7 @@ module Railsbytes
     # @api public
     def command(**options)
       require 'tty-command'
-      TTY::Command.new(options)
+      TTY::Command.new(**options)
     end
   end
 end
