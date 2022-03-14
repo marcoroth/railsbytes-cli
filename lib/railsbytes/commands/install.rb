@@ -2,6 +2,8 @@
 
 require 'lhc'
 require 'json'
+require 'nokogiri'
+require 'uri'
 require 'thor'
 
 require 'tty-spinner'
@@ -14,13 +16,6 @@ module Railsbytes
     class Install < Railsbytes::Command
       include Thor::Actions
 
-      TEMPLATES = [
-        { value: 'X8Bsjx', name: 'devise' },
-        { value: 'x9Qsqx', name: 'bootstrap' },
-        { value: 'VMysyV', name: 'stimulus_reflex' },
-        { value: 'z5OsqV', name: 'tailwind' }
-      ].freeze
-
       def initialize(name)
         @name = name
       end
@@ -30,11 +25,14 @@ module Railsbytes
 
         spinner = TTY::Spinner.new(":spinner Searching for '#{@name}' templates on railsbytes.com", format: :bouncing_ball)
         spinner.auto_spin
-        sleep 0.5
+        encoded_name = URI.encode_www_form_component(@name)
+        url = "https://railsbytes.com/public/templates?q=#{encoded_name}&commit=Search"
+        response = LHC.get(url, headers: { 'accept' => 'text/html' })
+        templates = parse_response(response)
         spinner.stop
 
-        template_id = prompt.select("\nAwesome! Found the following templates:", TEMPLATES)
-        template = TEMPLATES.find { |t| t[:value] == template_id }
+        template_id = prompt.select("\nAwesome! Found the following templates:", templates)
+        template = templates.find { |t| t[:value] == template_id }
         script = LHC.get("https://railsbytes.com/script/#{template_id}").body
 
         puts ''
@@ -63,6 +61,17 @@ module Railsbytes
       rescue TTY::Reader::InputInterrupt
         puts "\nAborting..."
         exit(0)
+      end
+
+      private
+
+      def parse_response(response)
+        Nokogiri::HTML(response.body).css('div.container div.grid > a').map do |grid_item|
+          name = grid_item.css('h4').text
+          href = grid_item[:href]
+          key = href.split("/").last
+          { name: name, value: key }
+        end
       end
     end
   end

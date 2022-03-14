@@ -30,6 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'tty-command', '~> 0.9'
   spec.add_dependency 'tty-prompt', '~> 0.21'
   spec.add_dependency 'tty-spinner', '~> 0.9'
+  spec.add_dependency 'nokogiri', '~> 1.13'
 
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'rake', '~> 13.0'
